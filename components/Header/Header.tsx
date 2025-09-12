@@ -5,10 +5,14 @@ import { MdCurrencyExchange } from 'react-icons/md';
 import { usePathname } from 'next/navigation';
 
 import styles from './Header.module.css';
+import { useCurrencyStore } from '@/lib/stores/currencyStore';
 
 export default function Header() {
   const pathname = usePathname();
+  const { baseCurrency, hasHydrated } = useCurrencyStore();
 
+  if (!hasHydrated) return null; // нічого не рендеримо під час SSR
+  
   return (
     <header className={styles.header}>
       <div className={styles.wrapper}>
@@ -29,7 +33,8 @@ export default function Header() {
         </nav>
       </div>
 
-      {/* ✔ Add base currency here !!! */}
+      {baseCurrency && <p>Your base currency: {baseCurrency}</p>}
+
     </header>
   );
 }
