@@ -1,8 +1,7 @@
-import { ReactNode } from 'react';
 import style from './Grid.module.css';
 
 interface GridProps {
-  children: ReactNode;
+  children: React.ReactNode;
 }
 
 export default function Grid({ children }: GridProps) {
