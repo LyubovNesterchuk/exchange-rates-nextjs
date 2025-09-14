@@ -1,24 +1,51 @@
-import styles from './RatesList.module.css';
+import Grid from '../Grid/Grid';
+import GridItem from '../GridItem/GridItem';
 
-interface Rate {
+import styles from './RatesList.module.css';
+interface Rate{
   key: string;
-  value: string;
+  value: number;
 }
 
-interface RatesListProps {
+interface RatesListProps{
   rates: Rate[];
 }
 
-export default function RatesList({ rates }: RatesListProps) {
+export default function RatesList({ rates }:RatesListProps) {
   return (
-    <ul className={styles.list}>
+    <Grid>
       {rates.map(({ key, value }) => (
-        <li className={styles.item} key={key}>
+        <GridItem key={key}>
           <p className={styles.text}>
             1 {key} = {value}
           </p>
-        </li>
+        </GridItem>
       ))}
-    </ul>
+    </Grid>
   );
 }
+
+// import styles from './RatesList.module.css';
+
+// interface Rate {
+//   key: string;
+//   value: string;
+// }
+
+// interface RatesListProps {
+//   rates: Rate[];
+// }
+
+// export default function RatesList({ rates }: RatesListProps) {
+//   return (
+//     <ul className={styles.list}>
+//       {rates.map(({ key, value }) => (
+//         <li className={styles.item} key={key}>
+//           <p className={styles.text}>
+//             1 {key} = {value}
+//           </p>
+//         </li>
+//       ))}
+//     </ul>
+//   );
+// }

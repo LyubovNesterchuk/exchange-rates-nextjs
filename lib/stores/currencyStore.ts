@@ -1,42 +1,99 @@
-import { create } from 'zustand';
-import { persist } from 'zustand/middleware';
-import { getUserCurrency } from '@/lib/opencagedataApi';
+import { create } from "zustand";
+import { persist } from "zustand/middleware";
 
-type CurrencyState = {
-  baseCurrency: string;
-  setBaseCurrency: (currency: string) => void;
-  detectCurrency: (latitude: number, longitude: number) => Promise<void>;
-  hasHydrated: boolean;
-  setHasHydrated: (state: boolean) => void;
-};
+interface ExchengeInfo {
+    from: string,
+    to: string,
+    amount: string,
+    rate: number,
+    result:number,
+}
 
-export const useCurrencyStore = create<CurrencyState>()(
-  persist(
+interface CurrencyStore {
+    baseCurrency: string,
+    exchengeInfo: ExchengeInfo | null,
+    rates: [string, number][],
+    filter: string,
+    isLoading: boolean,
+    isError: string | null,
+    hasHydrated: boolean,
+    setBaseCurrency: (currency:string) => void;
+    setExchengeInfo: (exchengeInfo:ExchengeInfo|null) => void;
+    setRates: (rates:[string, number][]) => void;
+    setFilter: (filter:string) => void;
+    setIsLoading: (loading:boolean) => void;
+    setIsError: (error: string | null) => void;
+    setHasHydrated: (hasHydrated:boolean) => void;
+}
+
+
+export const useCurrencyStore = create<CurrencyStore>()(
+    persist(
     (set) => ({
-      baseCurrency: 'USD', // дефолтна валюта
-      hasHydrated: false,
+    baseCurrency: "",
+    exchengeInfo: null,
+    rates:[],
+    filter: "",
+    isLoading: false,
+    isError: null,
+    hasHydrated: false,
     
-      setBaseCurrency: (currency: string) => set({ baseCurrency: currency }),
-      setHasHydrated: (state: boolean) => set({ hasHydrated: state }),
-
-      detectCurrency: async (latitude: number, longitude: number) => {
-        try {
-          const currency = await getUserCurrency({ latitude, longitude });
-          set({ baseCurrency: currency });
-        } catch (err) {
-          console.error('Failed to detect currency:', err);
-          set({ baseCurrency: 'USD' }); // fallback
-        }
-      },
-    }),
-    {
-      name: 'currency-storage',// ключ у localStorage
-      partialize: (state) => ({ baseCurrency: state.baseCurrency }),
-      onRehydrateStorage: () => (state) => {
-        state?.setHasHydrated(true);
-      },
+    setBaseCurrency: (currency) => set({baseCurrency:currency}),
+    setExchengeInfo: (exchengeInfo) => set({exchengeInfo}),
+    setRates: (rates) => set({rates}),
+    setFilter: (filter) => set({filter}),
+    setIsLoading: (loading) => set({isLoading:loading}),
+    setIsError: (error) => set({isError:error}),
+    setHasHydrated: (hasHydrated) => set({ hasHydrated }),
+      }), {
+        name: "Currency Store",
+        partialize: (state) => ({ baseCurrency: state.baseCurrency }),
+        onRehydrateStorage: () => (state) => { state?.setHasHydrated(true) }
     }
   )
-);
+)
+
+
+
+// import { create } from 'zustand';
+// import { persist } from 'zustand/middleware';
+// import { getUserCurrency } from '@/lib/opencagedataApi';
+
+// type CurrencyState = {
+//   baseCurrency: string;
+//   setBaseCurrency: (currency: string) => void;
+//   detectCurrency: (latitude: number, longitude: number) => Promise<void>;
+//   hasHydrated: boolean;
+//   setHasHydrated: (state: boolean) => void;
+// };
+
+// export const useCurrencyStore = create<CurrencyState>()(
+//   persist(
+//     (set) => ({
+//       baseCurrency: 'USD', // дефолтна валюта
+//       hasHydrated: false,
+    
+//       setBaseCurrency: (currency: string) => set({ baseCurrency: currency }),
+//       setHasHydrated: (state: boolean) => set({ hasHydrated: state }),
+
+//       detectCurrency: async (latitude: number, longitude: number) => {
+//         try {
+//           const currency = await getUserCurrency({ latitude, longitude });
+//           set({ baseCurrency: currency });
+//         } catch (err) {
+//           console.error('Failed to detect currency:', err);
+//           set({ baseCurrency: 'USD' }); // fallback
+//         }
+//       },
+//     }),
+//     {
+//       name: 'currency-storage',// ключ у localStorage
+//       partialize: (state) => ({ baseCurrency: state.baseCurrency }),
+//       onRehydrateStorage: () => (state) => {
+//         state?.setHasHydrated(true);
+//       },
+//     }
+//   )
+// );
 
   
