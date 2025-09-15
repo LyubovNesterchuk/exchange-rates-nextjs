@@ -2,12 +2,13 @@ import Grid from '../Grid/Grid';
 import GridItem from '../GridItem/GridItem';
 
 import styles from './RatesList.module.css';
-interface Rate{
+
+interface Rate {
   key: string;
   value: number;
 }
 
-interface RatesListProps{
+interface RatesListProps {
   rates: Rate[];
 }
 

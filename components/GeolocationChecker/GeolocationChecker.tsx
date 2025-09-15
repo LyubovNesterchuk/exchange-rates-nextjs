@@ -6,8 +6,10 @@ import { getUserInfo } from '@/lib/service/opencagedataApi';
 import { useCurrencyStore } from '@/lib/stores/currencyStore';
 
 export default function GeolocationChecker() {
+
   const baseCurrency = useCurrencyStore((state) => state.baseCurrency);
   const setBaseCurrency = useCurrencyStore((state) => state.setBaseCurrency);
+  
   const hasHydrated = useCurrencyStore((state) => state.hasHydrated);
 
   useEffect(() => {
@@ -29,7 +31,9 @@ export default function GeolocationChecker() {
     };
 
     navigator.geolocation.getCurrentPosition(success, error, options);
+
   }, [baseCurrency, hasHydrated, setBaseCurrency]);
+
   return null;
 }
 

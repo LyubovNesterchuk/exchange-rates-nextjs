@@ -1,7 +1,7 @@
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 
-interface ExchengeInfo {
+interface ExchangeInfo {
     from: string,
     to: string,
     amount: string,
@@ -11,14 +11,14 @@ interface ExchengeInfo {
 
 interface CurrencyStore {
     baseCurrency: string,
-    exchengeInfo: ExchengeInfo | null,
+    exchangeInfo: ExchangeInfo | null,
     rates: [string, number][],
     filter: string,
     isLoading: boolean,
     isError: string | null,
     hasHydrated: boolean,
     setBaseCurrency: (currency:string) => void;
-    setExchengeInfo: (exchengeInfo:ExchengeInfo|null) => void;
+    setExchangeInfo: (exchangeInfo:ExchangeInfo|null) => void;
     setRates: (rates:[string, number][]) => void;
     setFilter: (filter:string) => void;
     setIsLoading: (loading:boolean) => void;
@@ -31,7 +31,7 @@ export const useCurrencyStore = create<CurrencyStore>()(
     persist(
     (set) => ({
     baseCurrency: "",
-    exchengeInfo: null,
+    exchangeInfo: null,
     rates:[],
     filter: "",
     isLoading: false,
@@ -39,7 +39,7 @@ export const useCurrencyStore = create<CurrencyStore>()(
     hasHydrated: false,
     
     setBaseCurrency: (currency) => set({baseCurrency:currency}),
-    setExchengeInfo: (exchengeInfo) => set({exchengeInfo}),
+    setExchangeInfo: (exchangeInfo) => set({exchangeInfo}),
     setRates: (rates) => set({rates}),
     setFilter: (filter) => set({filter}),
     setIsLoading: (loading) => set({isLoading:loading}),

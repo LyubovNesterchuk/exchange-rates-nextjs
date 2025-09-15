@@ -17,6 +17,7 @@
 
   cursor: pointer;
 }
+
 .select option:first-of-type {
   color: var(--color-light);
 }

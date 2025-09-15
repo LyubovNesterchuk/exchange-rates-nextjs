@@ -7,13 +7,13 @@ import { useCurrencyStore } from '@/lib/stores/currencyStore';
 import { exchangeCurrency } from '@/lib/service/exchangeAPI';
 
 export default function ExchangeForm() {
-  const setExchengeInfo = useCurrencyStore((state) => state.setExchengeInfo);
+  const setExchangeInfo = useCurrencyStore((state) => state.setExchangeInfo);
 
   const handleSubmit = async (formData:FormData) => {
     const value = formData.get('currency') as string;
     const [amount, from, , to] = value.split(' ');
     const data = await exchangeCurrency({ from, amount, to });
-    setExchengeInfo(data);
+    setExchangeInfo(data);
   } 
   return (
     <form className={styles.form} action={handleSubmit}>

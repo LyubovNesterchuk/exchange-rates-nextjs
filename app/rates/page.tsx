@@ -1,28 +1,32 @@
 'use client';
 
 import { Wave } from 'react-animated-text';
+import { useEffect, useMemo } from 'react';
 
 import Container from '@/components/Container/Container';
 import Section from '@/components/Section/Section';
 import Heading from '@/components/Heading/Heading';
-
-import css from './RatesPage.module.css';
 import { useCurrencyStore } from '@/lib/stores/currencyStore';
-import { useEffect, useMemo } from 'react';
 import { latestRates } from '@/lib/service/exchangeAPI';
 import Loader from '@/components/Loader/Loader';
 import RatesList from '@/components/RatesList/RatesList';
 import Filter from '@/components/Filter/Filter';
 
+import css from './RatesPage.module.css';
+
+
 export default function RatesPage() {
-    const isError = useCurrencyStore((state) => state.isError);
-    const isLoading = useCurrencyStore((state) => state.isLoading);
-    const baseCurrency = useCurrencyStore((state) => state.baseCurrency);
-    const rates = useCurrencyStore((state) => state.rates);
-    const filter = useCurrencyStore((state) => state.filter);
-    const setIsLoading = useCurrencyStore((state) => state.setIsLoading);
-    const setIsError = useCurrencyStore((state) => state.setIsError);
-    const setRates = useCurrencyStore((state) => state.setRates);
+  
+  const isError = useCurrencyStore((state) => state.isError);
+  const isLoading = useCurrencyStore((state) => state.isLoading);
+  const baseCurrency = useCurrencyStore((state) => state.baseCurrency);
+  const rates = useCurrencyStore((state) => state.rates);
+  const filter = useCurrencyStore((state) => state.filter);
+    
+  const setIsLoading = useCurrencyStore((state) => state.setIsLoading);
+  const setIsError = useCurrencyStore((state) => state.setIsError);
+  const setRates = useCurrencyStore((state) => state.setRates);
+  
   const filterRates = useMemo(() => {
     return rates.filter(([key]) => (
         key!==baseCurrency && key.toLocaleLowerCase().includes(filter.toLocaleLowerCase())

@@ -4,14 +4,17 @@ interface Coordinates {
   latitude: number,
   longitude: number,
 }
+
 interface OpenCageCurrency{
   iso_code: string,
   name: string,
   symbol:string,
 }
+
 interface OpenCageResult {
   annotations: {currency:OpenCageCurrency}
 }
+
 interface OpenCageResponse{
   results: OpenCageResult[],
 }

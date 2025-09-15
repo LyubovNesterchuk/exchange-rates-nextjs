@@ -13,15 +13,15 @@ import ExchangeInfo from '@/components/ExchangeInfo/ExchangeInfo';
 export default function Home() {
   const isError = useCurrencyStore((state) => state.isError);
   const isLoading = useCurrencyStore((state) => state.isLoading);
-  const exchengeInfo = useCurrencyStore((state) => state.exchengeInfo);
+  const exchangeInfo = useCurrencyStore((state) => state.exchangeInfo);
 
   return (
     <main className={css.main}>
       <Section>
         <Container>
           <ExchangeForm />
-          {!isError && !exchengeInfo && <Heading info title="What currencies do you want to exchange?🙂" />}
-          {exchengeInfo && <ExchangeInfo {...exchengeInfo} />}
+          {!isError && !exchangeInfo && <Heading info title="What currencies do you want to exchange?🙂" />}
+          {exchangeInfo && <ExchangeInfo {...exchangeInfo} />}
           {isLoading && <Loader/>}
           {isError && (
             <Heading

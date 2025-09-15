@@ -18,9 +18,11 @@ interface ExchangeQuery{
   to:string,
   amount:string,
 }
+
 interface ExchangeInfo{
   rate:number,
 }
+
 interface ExchangeResponse{
   query: ExchangeQuery,
   info: ExchangeInfo,
